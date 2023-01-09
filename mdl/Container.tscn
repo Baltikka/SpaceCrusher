@@ -1,0 +1,119 @@
+[gd_scene load_steps=9 format=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0, 0.105882, 0.470588, 1 )
+roughness = 0.36
+
+[sub_resource type="CubeMesh" id=2]
+material = SubResource( 1 )
+size = Vector3( 7, 5, 5 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 1, 0.537255, 0, 1 )
+roughness = 0.44
+
+[sub_resource type="CubeMesh" id=4]
+material = SubResource( 3 )
+size = Vector3( 2, 5.5, 5.5 )
+
+[sub_resource type="SpatialMaterial" id=5]
+flags_unshaded = true
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="CubeMesh" id=6]
+material = SubResource( 5 )
+size = Vector3( 5, 4.5, 4.5 )
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 5.0087, 2.82533, 0.268326 )
+
+[sub_resource type="BoxShape" id=8]
+extents = Vector3( 0.711609, 2.82533, 2.96456 )
+
+[node name="Container" type="StaticBody"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 0 )
+mesh = SubResource( 4 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 0 )
+mesh = SubResource( 4 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance4" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.276122, -0.270468 )
+mesh = SubResource( 6 )
+skeleton = NodePath("../..")
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.94006, 2.9879, -3.19141 )
+light_color = Color( 0.988235, 0, 0, 1 )
+light_energy = 15.4
+omni_range = 5.07965
+omni_attenuation = 3.86375
+
+[node name="OmniLight4" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.94006, -3.28297, -3.19141 )
+light_color = Color( 0.988235, 0, 0, 1 )
+light_energy = 15.4
+omni_range = 5.07965
+omni_attenuation = 3.86375
+
+[node name="OmniLight2" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.94006, 2.9879, 3.27208 )
+light_color = Color( 0.988235, 0, 0, 1 )
+light_energy = 15.4
+omni_range = 5.07965
+omni_attenuation = 3.86375
+
+[node name="OmniLight3" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.94006, -3.22487, 3.27208 )
+light_color = Color( 0.988235, 0, 0, 1 )
+light_energy = 15.4
+omni_range = 5.07965
+omni_attenuation = 3.86375
+
+[node name="OmniLight5" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.83891, 2.9879, -3.19141 )
+light_color = Color( 0.988235, 0, 0, 1 )
+light_energy = 15.4
+omni_range = 5.07965
+omni_attenuation = 3.86375
+
+[node name="OmniLight6" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.83891, -3.28297, -3.19141 )
+light_color = Color( 0.988235, 0, 0, 1 )
+light_energy = 15.4
+omni_range = 5.07965
+omni_attenuation = 3.86375
+
+[node name="OmniLight7" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.83891, 2.9879, 3.27208 )
+light_color = Color( 0.988235, 0, 0, 1 )
+light_energy = 15.4
+omni_range = 5.07965
+omni_attenuation = 3.86375
+
+[node name="OmniLight8" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.83891, -3.22487, 3.27208 )
+light_color = Color( 0.988235, 0, 0, 1 )
+light_energy = 15.4
+omni_range = 5.07965
+omni_attenuation = 3.86375
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.57147 )
+shape = SubResource( 7 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.68276, -4.76837e-07, -0.0812529 )
+shape = SubResource( 8 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.72301, -4.76837e-07, -0.0812529 )
+shape = SubResource( 8 )
