@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_unshaded = true
+params_billboard_mode = 1
+distance_fade_mode = 1
+distance_fade_min_distance = 5.0
+distance_fade_max_distance = 30.0
+
+[sub_resource type="QuadMesh" id=5]
+material = SubResource( 4 )
+size = Vector2( 0.2, 0.2 )
+
+[node name="CPUParticles" type="CPUParticles"]
+cast_shadow = 0
+amount = 500
+lifetime = 10.0
+local_coords = false
+mesh = SubResource( 5 )
+emission_shape = 2
+emission_box_extents = Vector3( 100, 100, 100 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.1
+initial_velocity_random = 1.0
+__meta__ = {
+"_editor_description_": "Пихать ребёнком корабля"
+}
