@@ -5,9 +5,7 @@ var fuelcons = 1
 export var CurrentState: int
 enum ShipState{
 		OFF,
-		ON,
-		DAMAGED,
-		DESTROYED
+		ON
 	}
 
 var lookSensitivity = 10
