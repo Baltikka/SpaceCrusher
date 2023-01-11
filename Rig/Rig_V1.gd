@@ -32,6 +32,7 @@ onready var raycast = $Camera/RayCast
 onready var pointerL = $PointerL
 onready var pointerR = $PointerR
 onready var compass = $Compass
+onready var compassMat = $"Compass/3D Compass".get_surface_material(0)
 
 export var compassTarget: NodePath
 
@@ -51,7 +52,7 @@ func _input(event):
 
 func _process(delta):
 	animation_control()
-	compass()
+	mission_compass()
 	camera_control(delta)
 	if Input.is_action_just_pressed("Ignition"):
 		if CurrentState == ShipState.ON: #power down
@@ -141,12 +142,13 @@ func animation_control():
 		ShipState.OFF:
 			if $AnimationPlayer.current_animation != "PowerUp":
 				$AnimationPlayer.play("NO POWER")
+				compassMat.albedo_color = Color(1, 0, 0, 0.75)
 		ShipState.STARTUP:
 			$AnimationPlayer.play("PowerUp")
 		ShipState.ON:
-			pass
+			compassMat.albedo_color = Color(0, 1, 0.5, 0.75)
 		ShipState.SHUTDOWN:
 			$AnimationPlayer.play("ShutDown")
 
-func compass():
+func mission_compass():
 	compass.look_at(get_node(compassTarget).transform.origin, transform.basis.y)
