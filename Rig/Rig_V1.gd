@@ -31,6 +31,9 @@ onready var head = $Camera/head
 onready var raycast = $Camera/RayCast
 onready var pointerL = $PointerL
 onready var pointerR = $PointerR
+onready var compass = $Compass
+
+export var compassTarget: NodePath
 
 
 func _ready():
@@ -48,6 +51,7 @@ func _input(event):
 
 func _process(delta):
 	animation_control()
+	compass()
 	camera_control(delta)
 	if Input.is_action_just_pressed("Ignition"):
 		if CurrentState == ShipState.ON: #power down
@@ -144,3 +148,5 @@ func animation_control():
 		ShipState.SHUTDOWN:
 			$AnimationPlayer.play("ShutDown")
 
+func compass():
+	compass.look_at(get_node(compassTarget).transform.origin, transform.basis.y)

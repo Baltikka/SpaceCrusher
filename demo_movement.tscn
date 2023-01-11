@@ -228,6 +228,7 @@ skeleton = NodePath("../Sun")
 mesh = SubResource( 19 )
 
 [node name="Rig_V1" parent="." instance=ExtResource( 1 )]
+compassTarget = NodePath("../Marker")
 
 [node name="StarParticles" parent="Rig_V1" instance=ExtResource( 8 )]
 
