@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://mdl/Demo_rig.tres" type="ArrayMesh" id=1]
 [ext_resource path="res://Rig/Rig_V1.gd" type="Script" id=2]
@@ -102,7 +102,7 @@ size = Vector3( 0.3, 0.3, 2 )
 resource_name = "NO POWER"
 loop = true
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("no power/OmniLight:light_energy")
+tracks/0/path = NodePath("Lights/RedLight:light_energy")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -112,32 +112,32 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3, 0.5, 0.8, 1 )
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("no power/no power2:visible")
+tracks/1/path = NodePath("NoPowerInterface/no power2:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ true, false, true ]
+"values": [ true, false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("no power:visible")
+tracks/2/path = NodePath("NoPowerInterface/no power:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true, true ]
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=14]
-resource_name = "PowerOn"
+resource_name = "PowerUp"
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:CurrentState")
@@ -146,13 +146,13 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 5 ),
+"times": PoolRealArray( 0, 4.7 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 0, 1 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("speed:text")
+tracks/1/path = NodePath("ShipInterface/MainDisplay:text")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -181,43 +181,43 @@ engaging...
 system check...OK", "" ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("MeshInstance/X_display:visible")
+tracks/2/path = NodePath("ShipInterface/X_display:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 3, 3.2, 4.4, 5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 3, 3.2, 4.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ false, true, false, true, true ]
+"values": [ false, true, false, true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("MeshInstance/Y_display:visible")
+tracks/3/path = NodePath("ShipInterface/Y_display:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 3.2, 3.4, 4.4, 5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 3.2, 3.4, 4.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ false, true, false, true, true ]
+"values": [ false, true, false, true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("MeshInstance/Z_display:visible")
+tracks/4/path = NodePath("ShipInterface/Z_display:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 3.4, 3.6, 4.4, 5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 3.4, 3.6, 4.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ false, true, false, true, true ]
+"values": [ false, true, false, true ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("MeshInstance/Crosshair:text")
+tracks/5/path = NodePath("ShipInterface/Crosshair:text")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -230,7 +230,7 @@ tracks/5/keys = {
 prisoner #8934", "", "+", "+" ]
 }
 tracks/6/type = "bezier"
-tracks/6/path = NodePath("MeshInstance/Crosshair:scale:x")
+tracks/6/path = NodePath("ShipInterface/Crosshair:scale:x")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -240,7 +240,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0, 0.5, 3, 4, 5 )
 }
 tracks/7/type = "bezier"
-tracks/7/path = NodePath("MeshInstance/Crosshair:scale:y")
+tracks/7/path = NodePath("ShipInterface/Crosshair:scale:y")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -250,7 +250,7 @@ tracks/7/keys = {
 "times": PoolRealArray( 0, 0.5, 3, 4, 5 )
 }
 tracks/8/type = "bezier"
-tracks/8/path = NodePath("MeshInstance/Crosshair:scale:z")
+tracks/8/path = NodePath("ShipInterface/Crosshair:scale:z")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -260,44 +260,92 @@ tracks/8/keys = {
 "times": PoolRealArray( 0, 0.5, 3, 4, 5 )
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("no power:visible")
+tracks/9/path = NodePath("Lights/OmniLight:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 0, 5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false, false ]
+"values": [ true ]
 }
-tracks/10/type = "value"
-tracks/10/path = NodePath("OmniLight:visible")
+tracks/10/type = "bezier"
+tracks/10/path = NodePath("Lights/OmniLight:light_energy")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
 tracks/10/enabled = true
 tracks/10/keys = {
-"times": PoolRealArray( 0, 5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, true ]
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0.3, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 5 )
 }
-tracks/11/type = "bezier"
-tracks/11/path = NodePath("OmniLight:light_energy")
+tracks/11/type = "value"
+tracks/11/path = NodePath("ShipInterface/Crosshair:visible")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
 tracks/11/enabled = true
 tracks/11/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0.3, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 5 )
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("ShipInterface/MainDisplay:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("NoPowerInterface:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("ShipInterface:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Lights/RedLight:light_energy")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
 }
 
 [sub_resource type="Animation" id=13]
 length = 0.001
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("no power/OmniLight:light_energy")
+tracks/0/path = NodePath("Lights/RedLight:light_energy")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -307,7 +355,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("no power:visible")
+tracks/1/path = NodePath("NoPowerInterface/no power:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -319,7 +367,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("no power/no power2:visible")
+tracks/2/path = NodePath("NoPowerInterface/no power2:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -331,7 +379,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("MeshInstance/X_display:visible")
+tracks/3/path = NodePath("ShipInterface/X_display:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -343,7 +391,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("MeshInstance/Y_display:visible")
+tracks/4/path = NodePath("ShipInterface/Y_display:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -355,7 +403,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("MeshInstance/Z_display:visible")
+tracks/5/path = NodePath("ShipInterface/Z_display:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -367,7 +415,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("MeshInstance/Crosshair:text")
+tracks/6/path = NodePath("ShipInterface/Crosshair:text")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -379,7 +427,7 @@ tracks/6/keys = {
 "values": [ "+" ]
 }
 tracks/7/type = "bezier"
-tracks/7/path = NodePath("MeshInstance/Crosshair:scale:x")
+tracks/7/path = NodePath("ShipInterface/Crosshair:scale:x")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -389,7 +437,7 @@ tracks/7/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/8/type = "bezier"
-tracks/8/path = NodePath("MeshInstance/Crosshair:scale:y")
+tracks/8/path = NodePath("ShipInterface/Crosshair:scale:y")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -399,7 +447,7 @@ tracks/8/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/9/type = "bezier"
-tracks/9/path = NodePath("MeshInstance/Crosshair:scale:z")
+tracks/9/path = NodePath("ShipInterface/Crosshair:scale:z")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -409,7 +457,7 @@ tracks/9/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("no power/OmniLight:visible")
+tracks/10/path = NodePath("Lights/RedLight:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -421,7 +469,7 @@ tracks/10/keys = {
 "values": [ true ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("OmniLight:visible")
+tracks/11/path = NodePath("Lights/OmniLight:visible")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -433,7 +481,7 @@ tracks/11/keys = {
 "values": [ true ]
 }
 tracks/12/type = "bezier"
-tracks/12/path = NodePath("OmniLight:light_energy")
+tracks/12/path = NodePath("Lights/OmniLight:light_energy")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/imported = false
@@ -442,93 +490,300 @@ tracks/12/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0 )
 }
+tracks/13/type = "value"
+tracks/13/path = NodePath("ShipInterface/Crosshair:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("ShipInterface/MainDisplay:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("NoPowerInterface:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("ShipInterface:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "ShutDown"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("ShipInterface/MainDisplay:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.25, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ShipInterface/Crosshair:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.25, 0.35, 0.4, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ShipInterface/X_display:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1, 0.2, 0.3, 0.4, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ShipInterface/Y_display:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.05, 0.15, 0.25, 0.35, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ShipInterface/Z_display:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.15, 0.2, 0.3, 0.45, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Lights/OmniLight:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Lights/OmniLight:light_energy")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.3, 0.0 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Lights/RedLight:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Lights/RedLight:light_energy")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0.1, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath(".:CurrentState")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 3, 0 ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("ShipInterface:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("NoPowerInterface:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [node name="Rig_V1" type="KinematicBody"]
 script = ExtResource( 2 )
+CurrentState = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1.91069e-15, -1, 1.1921e-07, 1, 7.1215e-15, 4.37114e-08, -4.37114e-08, 1.1921e-07, 1, 0.00172627, -0.204294, -0.265846 )
+transform = Transform( 1.91069e-15, -1, 1.1921e-07, 1, 7.1215e-15, 4.37114e-08, -4.37114e-08, 1.1921e-07, 1, 0, -0.2, -0.2 )
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, -3.90799e-14, 0, 0.837, -1.0717e-07, -1.06581e-14, 9.97788e-08, 0.899, -0.00278574, 0, -0.508844 )
+[node name="ShipModel" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, -3.90799e-14, 0, 0.837, -1.0717e-07, -1.06581e-14, 9.97788e-08, 0.899, 0, 0, -0.5 )
 mesh = ExtResource( 1 )
 material/0 = SubResource( 2 )
 
-[node name="Crosshair" type="Label3D" parent="MeshInstance" groups=["ShipInterface"]]
-transform = Transform( 1, 0, 0, 0, 1, -2.27773e-22, 0, 2.27773e-22, 1, 1.19209e-07, -1.44166e-07, -1.20934 )
-no_depth_test = true
-modulate = Color( 0, 1, 0.647059, 1 )
-text = "+"
-
-[node name="X_display" type="Label3D" parent="MeshInstance" groups=["ShipInterface"]]
-transform = Transform( 0.5, -8.47032e-22, 1.77636e-14, 8.47033e-22, 0.5, -3.90799e-14, -1.77636e-14, 3.90799e-14, 0.5, -0.0443239, -1.44166e-07, -1.20934 )
-visible = false
-no_depth_test = true
-modulate = Color( 0, 1, 0.647059, 1 )
-text = "10"
-horizontal_alignment = 2
-
-[node name="Y_display" type="Label3D" parent="MeshInstance" groups=["ShipInterface"]]
-transform = Transform( 0.5, 6.35275e-22, 1.06581e-14, 2.11758e-22, 0.5, -3.55271e-14, -1.24345e-14, 2.84217e-14, 0.5, 0.0306376, -1.44166e-07, -1.20934 )
-visible = false
-no_depth_test = true
-modulate = Color( 0, 1, 0.647059, 1 )
-text = "10"
-horizontal_alignment = 0
-
-[node name="Z_display" type="Label3D" parent="MeshInstance" groups=["ShipInterface"]]
-transform = Transform( 0.5, 6.35275e-22, 1.42109e-14, 4.23516e-22, 0.5, -4.26326e-14, -1.42109e-14, 3.19744e-14, 0.5, -0.0050292, -0.0718217, -1.20934 )
-visible = false
-no_depth_test = true
-modulate = Color( 0, 1, 0.647059, 1 )
-text = "10"
-
-[node name="OmniLight" type="OmniLight" parent="." groups=["ShipInterface"]]
-transform = Transform( 1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -0.00278574, 0.805479, 0.386595 )
-light_energy = 0.0
-shadow_enabled = true
-omni_range = 3.64694
-
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( 0.4, 5.97391e-09, 1.9473e-09, -9.01724e-09, 0.22704, 0.160391, 2.50466e-09, -0.136667, 0.26645, -0.0106937, -0.728842, -1.27178 )
+[node name="Display" type="MeshInstance" parent="."]
+transform = Transform( 0.4, 0, 0, 0, 0.224733, 0.164805, 0, -0.140429, 0.263743, 0, -0.73, -1.2 )
 mesh = SubResource( 3 )
-skeleton = NodePath("../speed")
+skeleton = NodePath("../ShipInterface/MainDisplay")
 material/0 = SubResource( 4 )
 
-[node name="speed" type="Label3D" parent="." groups=["ShipInterface"]]
-transform = Transform( 0.5, 1.31561e-08, -5.32907e-14, -1.12716e-08, 0.428377, 0.257863, 6.78499e-09, -0.257863, 0.428377, -0.395213, -0.353313, -1.1263 )
+[node name="ShipInterface" type="Spatial" parent="." groups=["ShipInterface"]]
+transform = Transform( 1, 0, -3.90799e-14, 0, 0.837, -1.0717e-07, -1.06581e-14, 9.97788e-08, 0.899, 0, 0, -0.5 )
+
+[node name="MainDisplay" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
+transform = Transform( 0.5, 1.31561e-08, -3.4669e-14, -1.34667e-08, 0.5118, 0.30808, 7.54727e-09, -0.286833, 0.476504, -0.379728, -0.437164, -0.643184 )
+visible = false
 cast_shadow = 0
 no_depth_test = true
 modulate = Color( 0, 1, 0.647059, 1 )
 horizontal_alignment = 0
 vertical_alignment = 0
 
-[node name="no power" type="Label3D" parent="." groups=["ShipInterface"]]
+[node name="Crosshair" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
+transform = Transform( 1, -1.00974e-28, 1.69407e-21, 1.00974e-28, 1, -7.10543e-15, -1.69407e-21, 7.10543e-15, 1, 1.19209e-07, -1.44166e-07, -1.20934 )
+visible = false
+no_depth_test = true
+modulate = Color( 0, 1, 0.647059, 1 )
+text = "+"
+
+[node name="X_display" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
+transform = Transform( 0.5, -8.47032e-22, 1.77636e-14, 8.47033e-22, 0.5, -4.9738e-14, -1.77636e-14, 4.26326e-14, 0.5, -0.0443239, -1.44166e-07, -1.20934 )
+visible = false
+no_depth_test = true
+modulate = Color( 0, 1, 0.647059, 1 )
+text = "10"
+horizontal_alignment = 2
+
+[node name="Y_display" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
+transform = Transform( 0.5, 6.35275e-22, 1.06581e-14, 2.11758e-22, 0.5, -4.26326e-14, -1.24345e-14, 3.19744e-14, 0.5, 0.0306376, -1.44166e-07, -1.20934 )
+visible = false
+no_depth_test = true
+modulate = Color( 0, 1, 0.647059, 1 )
+text = "10"
+horizontal_alignment = 0
+
+[node name="Z_display" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
+transform = Transform( 0.5, 6.35275e-22, 1.42109e-14, 4.23516e-22, 0.5, -4.9738e-14, -1.42109e-14, 3.55271e-14, 0.5, -0.0050292, -0.0718217, -1.20934 )
+visible = false
+no_depth_test = true
+modulate = Color( 0, 1, 0.647059, 1 )
+text = "10"
+
+[node name="NoPowerInterface" type="Spatial" parent="."]
 transform = Transform( 0.5, 1.31562e-08, -2.22044e-14, -1.12716e-08, 0.428377, 0.515726, 6.78499e-09, -0.257863, 0.856754, -0.200037, -0.561262, -1.00651 )
+
+[node name="no power2" type="Label3D" parent="NoPowerInterface" groups=["ShipInterface"]]
+transform = Transform( 1, -2.25432e-08, 2.714e-08, 2.63124e-08, 0.856754, -1.03145, -1.19036e-14, 0.257863, 0.856754, 0.0569527, 1.49007, -0.150136 )
 cast_shadow = 0
 no_depth_test = true
 modulate = Color( 1, 0, 0, 1 )
 text = "NO POWER"
 horizontal_alignment = 0
 
-[node name="OmniLight" type="OmniLight" parent="no power"]
-transform = Transform( 2, -3.55271e-15, -1.77636e-15, 0, 2, 0, 0, 0, 1, 0.488931, -0.38773, 2.6132 )
+[node name="no power" type="Label3D" parent="NoPowerInterface" groups=["ShipInterface"]]
+transform = Transform( 1, -1.33227e-15, -1.77636e-15, -4.44089e-16, 1, 0, 0, 0, 1, 0, 0, 0 )
+cast_shadow = 0
+no_depth_test = true
+modulate = Color( 1, 0, 0, 1 )
+text = "NO POWER"
+horizontal_alignment = 0
+
+[node name="Lights" type="Spatial" parent="."]
+
+[node name="OmniLight" type="OmniLight" parent="Lights" groups=["ShipInterface"]]
+transform = Transform( 1, -4.20406e-27, 1.06581e-14, 2.66069e-28, 1, 3.69483e-13, -1.06581e-14, -3.69483e-13, 1, -0.00278574, 0.805479, 0.386595 )
+light_energy = 0.0
+shadow_enabled = true
+omni_range = 3.64694
+
+[node name="RedLight" type="OmniLight" parent="Lights"]
+transform = Transform( 1, 2.63124e-08, -2.13162e-14, -2.25432e-08, 0.856754, 0.515726, 1.357e-08, -0.515726, 0.856754, 0.0444285, 0.620338, 1.33234 )
 light_color = Color( 1, 0, 0, 1 )
 light_energy = 0.0
-
-[node name="no power2" type="Label3D" parent="no power" groups=["ShipInterface"]]
-transform = Transform( 1, -2.25432e-08, 2.714e-08, 2.63124e-08, 0.856754, -1.03145, -1.20209e-14, 0.257863, 0.856754, 0.0569527, 1.49007, -0.150136 )
-cast_shadow = 0
-no_depth_test = true
-modulate = Color( 1, 0, 0, 1 )
-text = "NO POWER"
-horizontal_alignment = 0
 
 [node name="Camera" type="Spatial" parent="."]
 
 [node name="head" type="Camera" parent="Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.228, 0, 0 )
 current = true
 fov = 90.0
 far = 1e+06
@@ -578,5 +833,6 @@ spot_angle_attenuation = 0.392292
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 "anims/NO POWER" = SubResource( 12 )
-anims/PowerOn = SubResource( 14 )
+anims/PowerUp = SubResource( 14 )
 anims/RESET = SubResource( 13 )
+anims/ShutDown = SubResource( 15 )

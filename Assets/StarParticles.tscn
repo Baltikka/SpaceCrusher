@@ -11,7 +11,7 @@ distance_fade_max_distance = 30.0
 material = SubResource( 4 )
 size = Vector2( 0.2, 0.2 )
 
-[node name="CPUParticles" type="CPUParticles"]
+[node name="StarParticles" type="CPUParticles"]
 cast_shadow = 0
 amount = 500
 lifetime = 10.0
