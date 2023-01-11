@@ -1,10 +1,12 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://mdl/Demo_rig.tres" type="ArrayMesh" id=1]
 [ext_resource path="res://Rig/Rig_V1.gd" type="Script" id=2]
+[ext_resource path="res://mdl/DemoRigV2.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
-radius = 1.46829
+radius = 1.82209
+height = 1.89197
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.478431, 0.478431, 0.478431, 1 )
@@ -693,16 +695,21 @@ script = ExtResource( 2 )
 CurrentState = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1.91069e-15, -1, 1.1921e-07, 1, 7.1215e-15, 4.37114e-08, -4.37114e-08, 1.1921e-07, 1, 0, -0.2, -0.2 )
+transform = Transform( 1.91069e-15, -1, 1.1921e-07, 1, 7.1215e-15, 4.37114e-08, -4.37114e-08, 1.1921e-07, 1, 0, -0.158031, -0.2 )
 shape = SubResource( 1 )
+
+[node name="DemoRigV2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.414171, -1.41085 )
 
 [node name="ShipModel" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, -3.90799e-14, 0, 0.837, -1.0717e-07, -1.06581e-14, 9.97788e-08, 0.899, 0, 0, -0.5 )
+visible = false
 mesh = ExtResource( 1 )
 material/0 = SubResource( 2 )
 
 [node name="Display" type="MeshInstance" parent="."]
 transform = Transform( 0.4, 0, 0, 0, 0.224733, 0.164805, 0, -0.140429, 0.263743, 0, -0.73, -1.2 )
+visible = false
 mesh = SubResource( 3 )
 skeleton = NodePath("../ShipInterface/MainDisplay")
 material/0 = SubResource( 4 )
@@ -711,7 +718,7 @@ material/0 = SubResource( 4 )
 transform = Transform( 1, 0, -3.90799e-14, 0, 0.837, -1.0717e-07, -1.06581e-14, 9.97788e-08, 0.899, 0, 0, -0.5 )
 
 [node name="MainDisplay" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
-transform = Transform( 0.5, 1.31561e-08, -3.4669e-14, -1.34667e-08, 0.5118, 0.30808, 7.54727e-09, -0.286833, 0.476504, -0.379728, -0.437164, -0.643184 )
+transform = Transform( 0.5, 1.31561e-08, -4.20797e-14, -8.10751e-09, 0.308125, 0.511774, 1.25373e-08, -0.476478, 0.286875, -0.379728, -0.706362, -1.23239 )
 visible = false
 cast_shadow = 0
 no_depth_test = true
@@ -720,14 +727,14 @@ horizontal_alignment = 0
 vertical_alignment = 0
 
 [node name="Crosshair" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
-transform = Transform( 1, -1.00974e-28, 1.69407e-21, 1.00974e-28, 1, -7.10543e-15, -1.69407e-21, 7.10543e-15, 1, 1.19209e-07, -1.44166e-07, -1.20934 )
+transform = Transform( 1, -2.01948e-28, 5.92923e-21, 2.01948e-28, 1, -2.84217e-14, -5.92923e-21, 2.84217e-14, 1, 1.19209e-07, -2.84432e-07, -2.30482 )
 visible = false
 no_depth_test = true
 modulate = Color( 0, 1, 0.647059, 1 )
 text = "+"
 
 [node name="X_display" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
-transform = Transform( 0.5, -8.47032e-22, 1.77636e-14, 8.47033e-22, 0.5, -4.9738e-14, -1.77636e-14, 4.26326e-14, 0.5, -0.0443239, -1.44166e-07, -1.20934 )
+transform = Transform( 0.5, -8.47032e-22, 1.77636e-14, 8.47034e-22, 0.5, -4.9738e-14, -1.77636e-14, 4.9738e-14, 0.5, -0.0443239, -2.84432e-07, -2.30482 )
 visible = false
 no_depth_test = true
 modulate = Color( 0, 1, 0.647059, 1 )
@@ -735,7 +742,7 @@ text = "10"
 horizontal_alignment = 2
 
 [node name="Y_display" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
-transform = Transform( 0.5, 6.35275e-22, 1.06581e-14, 2.11758e-22, 0.5, -4.26326e-14, -1.24345e-14, 3.19744e-14, 0.5, 0.0306376, -1.44166e-07, -1.20934 )
+transform = Transform( 0.5, -2.11758e-22, 1.24345e-14, 2.11759e-22, 0.5, -3.90799e-14, -1.24345e-14, 3.90799e-14, 0.5, 0.0306376, -2.84432e-07, -2.30482 )
 visible = false
 no_depth_test = true
 modulate = Color( 0, 1, 0.647059, 1 )
@@ -743,7 +750,7 @@ text = "10"
 horizontal_alignment = 0
 
 [node name="Z_display" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
-transform = Transform( 0.5, 6.35275e-22, 1.42109e-14, 4.23516e-22, 0.5, -4.9738e-14, -1.42109e-14, 3.55271e-14, 0.5, -0.0050292, -0.0718217, -1.20934 )
+transform = Transform( 0.5, -4.23515e-22, 1.42109e-14, 4.23516e-22, 0.5, -4.26326e-14, -1.42109e-14, 4.26326e-14, 0.5, -0.0050292, -0.0718218, -2.30482 )
 visible = false
 no_depth_test = true
 modulate = Color( 0, 1, 0.647059, 1 )
@@ -753,7 +760,7 @@ text = "10"
 transform = Transform( 0.5, 1.31562e-08, -2.22044e-14, -1.12716e-08, 0.428377, 0.515726, 6.78499e-09, -0.257863, 0.856754, -0.200037, -0.561262, -1.00651 )
 
 [node name="no power2" type="Label3D" parent="NoPowerInterface" groups=["ShipInterface"]]
-transform = Transform( 1, -2.25432e-08, 2.714e-08, 2.63124e-08, 0.856754, -1.03145, -1.19036e-14, 0.257863, 0.856754, 0.0569527, 1.49007, -0.150136 )
+transform = Transform( 1, -2.25432e-08, 2.714e-08, 2.63124e-08, 0.856754, -1.03145, -1.16689e-14, 0.257863, 0.856754, 0.0569527, 2.57058, -1.04764 )
 cast_shadow = 0
 no_depth_test = true
 modulate = Color( 1, 0, 0, 1 )
@@ -761,7 +768,7 @@ text = "NO POWER"
 horizontal_alignment = 0
 
 [node name="no power" type="Label3D" parent="NoPowerInterface" groups=["ShipInterface"]]
-transform = Transform( 1, -1.33227e-15, -1.77636e-15, -4.44089e-16, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform = Transform( 1, 2.72835e-09, -2.33355e-08, 2.72837e-09, 0.896309, 0.886862, 5.83385e-09, -0.221715, 0.896309, 0, -0.0247205, -0.362708 )
 cast_shadow = 0
 no_depth_test = true
 modulate = Color( 1, 0, 0, 1 )
@@ -771,13 +778,13 @@ horizontal_alignment = 0
 [node name="Lights" type="Spatial" parent="."]
 
 [node name="OmniLight" type="OmniLight" parent="Lights" groups=["ShipInterface"]]
-transform = Transform( 1, -4.20406e-27, 1.06581e-14, 2.66069e-28, 1, 3.69483e-13, -1.06581e-14, -3.69483e-13, 1, -0.00278574, 0.805479, 0.386595 )
+transform = Transform( 1, -4.20406e-27, 1.06581e-14, 2.66069e-28, 1, 3.69483e-13, -1.06581e-14, -3.69483e-13, 1, -0.00278574, 1.23299, -0.0333096 )
 light_energy = 0.0
 shadow_enabled = true
 omni_range = 3.64694
 
 [node name="RedLight" type="OmniLight" parent="Lights"]
-transform = Transform( 1, 2.63124e-08, -2.13162e-14, -2.25432e-08, 0.856754, 0.515726, 1.357e-08, -0.515726, 0.856754, 0.0444285, 0.620338, 1.33234 )
+transform = Transform( 1, 2.63124e-08, -3.90798e-14, -2.25432e-08, 0.856754, 0.515726, 1.357e-08, -0.515726, 0.856754, 0.0444285, 1.2544, 1.33234 )
 light_color = Color( 1, 0, 0, 1 )
 light_energy = 0.0
 
