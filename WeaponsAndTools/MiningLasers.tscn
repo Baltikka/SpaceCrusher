@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://WeaponsAndTools/MiningLasers.gd" type="Script" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+flags_unshaded = true
+
+[sub_resource type="CubeMesh" id=3]
+material = SubResource( 2 )
+size = Vector3( 0.03, 0.03, 1 )
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 1, 0, 0.376471, 0.152941 )
+
+[sub_resource type="CubeMesh" id=1]
+material = SubResource( 4 )
+size = Vector3( 0.07, 0.07, 1 )
+
+[sub_resource type="CubeMesh" id=8]
+size = Vector3( 0.2, 0.2, 0.2 )
+
+[sub_resource type="Curve" id=7]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.535235, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="MiningLasers" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Laser" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Laser"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5 )
+mesh = SubResource( 3 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Laser"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5 )
+mesh = SubResource( 1 )
+
+[node name="Laser2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Laser2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5 )
+mesh = SubResource( 3 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Laser2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5 )
+mesh = SubResource( 1 )
+
+[node name="CPUParticles" type="CPUParticles" parent="."]
+emitting = false
+amount = 100
+local_coords = false
+mesh = SubResource( 8 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 2.0
+initial_velocity_random = 1.0
+scale_amount_curve = SubResource( 7 )
+
+[node name="OmniLight" type="OmniLight" parent="CPUParticles"]
+light_color = Color( 1, 0, 0.423529, 1 )
+light_energy = 5.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

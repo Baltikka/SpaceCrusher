@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://mdl/Demo_rig.tres" type="ArrayMesh" id=1]
 [ext_resource path="res://Rig/Rig_V1.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://raw/posters/90fadff1957e5849364b4c367d505672.jpg" type="Texture" id=5]
 [ext_resource path="res://raw/posters/e0a90124b8f4fbf9c609b955033940d8--blade-runner-watch-movies.jpg" type="Texture" id=6]
 [ext_resource path="res://raw/posters/e6b3325e318aff62672bc81b00b5be50.jpg" type="Texture" id=7]
+[ext_resource path="res://WeaponsAndTools/MiningLasers.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 1.82209
@@ -713,9 +714,15 @@ flags_transparent = true
 flags_unshaded = true
 albedo_color = Color( 0, 1, 0.486275, 0.745098 )
 
-[node name="Rig_V1" type="KinematicBody"]
+[node name="Rig_V1" type="KinematicBody" groups=["PlayerShip"]]
+collision_layer = 2
+collision_mask = 3
 script = ExtResource( 2 )
 CurrentState = 3
+
+[node name="RayCast" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, 0, -100 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1.91069e-15, -1, 1.1921e-07, 1, 7.1215e-15, 4.37114e-08, -4.37114e-08, 1.1921e-07, 1, 0, -0.158031, -0.2 )
@@ -818,7 +825,7 @@ current = true
 fov = 90.0
 far = 1e+06
 
-[node name="RayCast" type="RayCast" parent="Camera"]
+[node name="RayCast2" type="RayCast" parent="Camera"]
 enabled = true
 cast_to = Vector3( 0, 0, -100 )
 
@@ -906,3 +913,10 @@ pixel_size = 0.0007
 transparent = false
 shaded = true
 texture = ExtResource( 7 )
+
+[node name="Weapons" type="Spatial" parent="."]
+
+[node name="MiningLasers" parent="Weapons" instance=ExtResource( 8 )]
+
+[node name="DefaultWeaponTarget" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50 )
