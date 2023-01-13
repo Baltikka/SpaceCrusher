@@ -60,13 +60,15 @@ func _process(delta):
 	mission_compass()
 	camera_control(delta)
 	#inputs
-	if Input.is_action_pressed("LMB"):
-		emit_signal("LMB", true)
-	elif Input.is_action_just_released("LMB"):
-		emit_signal("LMB", false)
+	if CurrentState == ShipState.ON:
+		if Input.is_action_pressed("LMB"):
+			emit_signal("LMB", true)
+		elif Input.is_action_just_released("LMB"):
+			emit_signal("LMB", false)
 	if Input.is_action_just_pressed("Ignition"):
 		if CurrentState == ShipState.ON: #power down
 			CurrentState = ShipState.SHUTDOWN
+			emit_signal("LMB", false)
 		elif CurrentState == ShipState.OFF:
 			CurrentState = ShipState.STARTUP
 	if fuel <= 0.05:
@@ -132,7 +134,7 @@ func get_input(delta):
 
 
 func display_info():
-	$ShipInterface/MainDisplay.text = "THRUST: " + str(stepify(speed, 0.1)) + "\nFUEL: " + str(stepify(fuel, 0.1)) + "%" + "\nHEAT: " + str(heat) + "%"
+	$ShipInterface/MainDisplay.text = "THRUST: " + str(stepify(speed, 0.1)) + "\nFUEL: " + str(stepify(fuel, 0.1)) + "%" + "\nHEAT:"
 	$ShipInterface/X_display.text = String(abs(stepify(rad2deg(rotation.x), 0.1)))
 	$ShipInterface/Y_display.text = String(abs(stepify(rad2deg(rotation.y), 0.1)))
 	$ShipInterface/Z_display.text = String(abs(stepify(rad2deg(rotation.z), 0.1)))
