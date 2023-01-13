@@ -18,6 +18,7 @@ var yaw_speed = 1.2
 var input_response = 4.0
 #ship params
 var fuel = 100
+var heat = 0
 var fuelcons = 1
 #changing vars
 var velocity = Vector3.ZERO
@@ -28,13 +29,18 @@ var yaw_input = 0
 #references
 onready var camera  = $Camera
 onready var head = $Camera/head
-onready var raycast = $Camera/RayCast
-onready var pointerL = $PointerL
-onready var pointerR = $PointerR
+onready var raycast = $RayCast
+onready var interactCast = $Camera/head/InteractCast
 onready var compass = $Compass
 onready var compassMat = $"Compass/3D Compass".get_surface_material(0)
+onready var weaponsContainer = $Weapons
+onready var defaultTarget = $DefaultWeaponTarget
 
 export var compassTarget: NodePath
+
+#signals
+signal raycastTarget(target, position, distance, locked)
+signal LMB(pressed)
 
 
 func _ready():
@@ -54,9 +60,24 @@ func _process(delta):
 	animation_control()
 	mission_compass()
 	camera_control(delta)
+	#inputs
+	if Input.is_action_just_pressed("LMB") and camera_lock:
+		var col = interactCast.get_collider()
+		if col:
+			if col.is_in_group("Interactable"):
+					col.interact()
+	
+	
+	if CurrentState == ShipState.ON:
+		if Input.is_action_pressed("LMB"):
+			if !camera_lock:
+				emit_signal("LMB", true)
+		elif Input.is_action_just_released("LMB"):
+			emit_signal("LMB", false)
 	if Input.is_action_just_pressed("Ignition"):
 		if CurrentState == ShipState.ON: #power down
 			CurrentState = ShipState.SHUTDOWN
+			emit_signal("LMB", false)
 		elif CurrentState == ShipState.OFF:
 			CurrentState = ShipState.STARTUP
 	if fuel <= 0.05:
@@ -64,11 +85,20 @@ func _process(delta):
 	if CurrentState == ShipState.ON:
 		display_info()
 	
-	#gun pointing
-	var point = raycast.get_collision_point()
-	if point:
-		pointerL.look_at(point, transform.basis.y)
-		pointerR.look_at(point, transform.basis.y)
+	#наводка на цель через raycast
+	var ray_col = raycast.get_collider()
+	if ray_col:
+		# если есть цель - отправляем ее позицию и дистанцию до нее
+		var target = raycast.get_collider()
+		var position = raycast.get_collision_point()
+		var distance = raycast.transform.origin.distance_to(target.transform.origin)
+		emit_signal("raycastTarget", target, position, distance, true)
+	else:
+		# если цели нет - наводимся на дефолт позицию
+		var target = defaultTarget
+		var position = defaultTarget.global_transform.origin
+		var distance = raycast.transform.origin.distance_to(defaultTarget.global_transform.origin)
+		emit_signal("raycastTarget", target,position, distance, false)
 
 
 func _physics_process(delta):
@@ -113,7 +143,7 @@ func get_input(delta):
 
 
 func display_info():
-	$ShipInterface/MainDisplay.text = "THRUST: " + String(stepify(speed, 0.1)) + "\nFUEL: " + String(stepify(fuel, 0.1)) + "%"
+	$ShipInterface/MainDisplay.text = "THRUST: " + str(stepify(speed, 0.1)) + "\nFUEL: " + str(stepify(fuel, 0.1)) + "%" + "\nHEAT:"
 	$ShipInterface/X_display.text = String(abs(stepify(rad2deg(rotation.x), 0.1)))
 	$ShipInterface/Y_display.text = String(abs(stepify(rad2deg(rotation.y), 0.1)))
 	$ShipInterface/Z_display.text = String(abs(stepify(rad2deg(rotation.z), 0.1)))
@@ -151,4 +181,15 @@ func animation_control():
 			$AnimationPlayer.play("ShutDown")
 
 func mission_compass():
-	compass.look_at(get_node(compassTarget).transform.origin, transform.basis.y)
+	match CurrentState:
+		ShipState.OFF:
+			pass
+		ShipState.ON:
+			if compassTarget:
+				compass.look_at(get_node(compassTarget).transform.origin, transform.basis.y)
+
+func startup():
+	CurrentState = ShipState.STARTUP
+
+func shutdown():
+	CurrentState = ShipState.SHUTDOWN
