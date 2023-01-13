@@ -1,114 +1,44 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=19 format=2]
 
-[ext_resource path="res://mdl/Demo_rig.tres" type="ArrayMesh" id=1]
-[ext_resource path="res://Rig/Rig_V1.gd" type="Script" id=2]
-[ext_resource path="res://mdl/DemoRigV2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Rig/HeatDisplay.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Rig/Rig_V2.gd" type="Script" id=2]
+[ext_resource path="res://fisheye.gdshader" type="Shader" id=3]
 [ext_resource path="res://raw/posters/de040fba73b35ff9f74a7cf5dee19916.png" type="Texture" id=4]
 [ext_resource path="res://raw/posters/90fadff1957e5849364b4c367d505672.jpg" type="Texture" id=5]
 [ext_resource path="res://raw/posters/e0a90124b8f4fbf9c609b955033940d8--blade-runner-watch-movies.jpg" type="Texture" id=6]
 [ext_resource path="res://raw/posters/e6b3325e318aff62672bc81b00b5be50.jpg" type="Texture" id=7]
 [ext_resource path="res://WeaponsAndTools/MiningLasers.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Rig/HeatDisplay.tscn" type="PackedScene" id=9]
+[ext_resource path="res://mdl/ShipV2.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Rig/POWER ON_BOX.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 1.85182
 height = 1.89197
 
-[sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.478431, 0.478431, 0.478431, 1 )
-
-[sub_resource type="CubeMesh" id=3]
-
-[sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0, 0, 0, 1 )
-roughness = 0.0
-
-[sub_resource type="Shader" id=10]
-code = "/*
-	蜃気楼シェーダー by あるる（きのもと 結衣）
-	Heat haze shader by Yui Kinomoto @arlez80
-
-	MIT License
-*/
-shader_type spatial;
-render_mode unshaded;
-
-uniform float max_shift = 2.5;
-uniform float speed = 0.03;
-uniform float min_heathaze_dist = 0.99;
-
-float random( vec2 pos )
-{ 
-	return fract(sin(dot(pos, vec2(12.9898,78.233))) * 43758.5453);
+[sub_resource type="ArrayMesh" id=16]
+resource_name = "ShipV2_Cone"
+surfaces/0 = {
+"aabb": AABB( -0.0579327, -0.0585136, -0.0579328, 0.115866, 0.213344, 0.115866 ),
+"array_data": PoolByteArray( 108, 183, 111, 51, 236, 171, 111, 189, 232, 74, 109, 189, 157, 127, 119, 58, 149, 52, 135, 53, 108, 183, 111, 51, 236, 171, 111, 189, 232, 74, 109, 189, 0, 129, 129, 34, 237, 58, 232, 40, 205, 44, 57, 60, 236, 171, 111, 189, 172, 187, 104, 189, 103, 109, 98, 57, 231, 52, 149, 53, 205, 44, 57, 60, 236, 171, 111, 189, 172, 187, 104, 189, 0, 129, 129, 34, 179, 58, 1, 37, 205, 44, 57, 60, 236, 171, 111, 189, 172, 187, 104, 189, 103, 109, 137, 49, 230, 58, 252, 59, 210, 157, 181, 60, 236, 171, 111, 189, 210, 58, 91, 189, 0, 129, 129, 34, 115, 58, 194, 30, 210, 157, 181, 60, 236, 171, 111, 189, 210, 58, 91, 189, 105, 96, 131, 44, 180, 58, 0, 60, 64, 213, 3, 61, 236, 171, 111, 189, 51, 77, 69, 189, 0, 129, 129, 34, 47, 58, 0, 0, 64, 213, 3, 61, 236, 171, 111, 189, 51, 77, 69, 189, 106, 84, 134, 89, 121, 58, 254, 59, 162, 202, 39, 61, 236, 171, 111, 189, 138, 202, 39, 189, 0, 129, 129, 34, 234, 57, 0, 0, 162, 202, 39, 61, 236, 171, 111, 189, 138, 202, 39, 189, 106, 73, 139, 96, 57, 58, 249, 59, 75, 77, 69, 61, 236, 171, 111, 189, 40, 213, 3, 189, 0, 129, 129, 34, 166, 57, 194, 30, 75, 77, 69, 61, 236, 171, 111, 189, 40, 213, 3, 189, 106, 63, 143, 102, 246, 57, 238, 59, 233, 58, 91, 61, 236, 171, 111, 189, 161, 157, 181, 188, 0, 129, 129, 34, 102, 57, 1, 37, 233, 58, 91, 61, 236, 171, 111, 189, 161, 157, 181, 188, 105, 52, 148, 109, 178, 57, 224, 59, 197, 187, 104, 61, 236, 171, 111, 189, 107, 44, 57, 188, 0, 129, 129, 34, 45, 57, 232, 40, 197, 187, 104, 61, 236, 171, 111, 189, 107, 44, 57, 188, 103, 40, 153, 115, 112, 57, 207, 59, 254, 74, 109, 61, 236, 171, 111, 189, 117, 193, 23, 51, 0, 129, 129, 34, 252, 56, 248, 43, 254, 74, 109, 61, 236, 171, 111, 189, 117, 193, 23, 51, 99, 27, 158, 123, 51, 57, 186, 59, 197, 187, 104, 61, 236, 171, 111, 189, 182, 44, 57, 60, 0, 129, 129, 34, 213, 56, 201, 45, 197, 187, 104, 61, 236, 171, 111, 189, 182, 44, 57, 60, 86, 23, 96, 122, 253, 56, 164, 59, 233, 58, 91, 61, 236, 171, 111, 189, 198, 157, 181, 60, 0, 129, 129, 34, 186, 56, 201, 47, 233, 58, 91, 61, 236, 171, 111, 189, 198, 157, 181, 60, 74, 21, 98, 115, 207, 56, 141, 59, 75, 77, 69, 61, 236, 171, 111, 189, 59, 213, 3, 61, 0, 129, 129, 34, 173, 56, 244, 48, 75, 77, 69, 61, 236, 171, 111, 189, 59, 213, 3, 61, 63, 20, 98, 110, 173, 56, 117, 59, 75, 77, 69, 61, 236, 171, 111, 189, 59, 213, 3, 61, 63, 20, 120, 24, 173, 56, 252, 59, 162, 202, 39, 61, 236, 171, 111, 189, 157, 202, 39, 61, 53, 20, 125, 31, 122, 56, 0, 60, 162, 202, 39, 61, 236, 171, 111, 189, 157, 202, 39, 61, 0, 129, 129, 34, 173, 56, 10, 50, 64, 213, 3, 61, 236, 171, 111, 189, 68, 77, 69, 61, 42, 20, 122, 90, 64, 56, 254, 59, 64, 213, 3, 61, 236, 171, 111, 189, 68, 77, 69, 61, 0, 129, 129, 34, 186, 56, 25, 51, 210, 157, 181, 60, 236, 171, 111, 189, 228, 58, 91, 61, 30, 21, 117, 86, 255, 55, 249, 59, 210, 157, 181, 60, 236, 171, 111, 189, 228, 58, 91, 61, 0, 129, 129, 34, 213, 56, 13, 52, 205, 44, 57, 60, 236, 171, 111, 189, 192, 187, 104, 61, 17, 23, 111, 82, 121, 55, 238, 59, 205, 44, 57, 60, 236, 171, 111, 189, 192, 187, 104, 61, 0, 129, 129, 34, 252, 56, 128, 52, 108, 183, 111, 51, 236, 171, 111, 189, 249, 74, 109, 61, 0, 27, 104, 77, 241, 54, 224, 59, 108, 183, 111, 51, 236, 171, 111, 189, 249, 74, 109, 61, 0, 129, 129, 34, 45, 57, 226, 52, 82, 44, 57, 188, 236, 171, 111, 189, 192, 187, 104, 61, 239, 23, 90, 76, 109, 54, 207, 59, 82, 44, 57, 188, 236, 171, 111, 189, 192, 187, 104, 61, 0, 129, 129, 34, 102, 57, 47, 53, 149, 157, 181, 188, 236, 171, 111, 189, 228, 58, 91, 61, 226, 21, 77, 76, 243, 53, 186, 59, 149, 157, 181, 188, 236, 171, 111, 189, 228, 58, 91, 61, 0, 129, 129, 34, 166, 57, 100, 53, 35, 213, 3, 189, 236, 171, 111, 189, 68, 77, 69, 61, 214, 20, 65, 76, 135, 53, 164, 59, 35, 213, 3, 189, 236, 171, 111, 189, 68, 77, 69, 61, 0, 129, 129, 34, 234, 57, 127, 53, 133, 202, 39, 189, 236, 171, 111, 189, 157, 202, 39, 61, 203, 20, 55, 76, 44, 53, 141, 59, 133, 202, 39, 189, 236, 171, 111, 189, 157, 202, 39, 61, 0, 129, 129, 34, 47, 58, 127, 53, 46, 77, 69, 189, 236, 171, 111, 189, 59, 213, 3, 61, 193, 20, 159, 110, 0, 0, 232, 54, 46, 77, 69, 189, 236, 171, 111, 189, 59, 213, 3, 61, 193, 20, 45, 77, 231, 52, 117, 59, 46, 77, 69, 189, 236, 171, 111, 189, 59, 213, 3, 61, 0, 129, 129, 34, 115, 58, 100, 53, 203, 58, 91, 189, 236, 171, 111, 189, 198, 157, 181, 60, 182, 21, 159, 115, 101, 33, 184, 54, 203, 58, 91, 189, 236, 171, 111, 189, 198, 157, 181, 60, 0, 129, 129, 34, 179, 58, 47, 53, 167, 187, 104, 189, 236, 171, 111, 189, 182, 44, 57, 60, 170, 23, 163, 123, 231, 38, 135, 54, 167, 187, 104, 189, 236, 171, 111, 189, 182, 44, 57, 60, 0, 129, 129, 34, 237, 58, 226, 52, 225, 74, 109, 189, 236, 171, 111, 189, 117, 193, 23, 51, 157, 27, 94, 122, 58, 42, 85, 54, 225, 74, 109, 189, 236, 171, 111, 189, 117, 193, 23, 51, 0, 129, 129, 34, 30, 59, 128, 52, 167, 187, 104, 189, 236, 171, 111, 189, 107, 44, 57, 188, 153, 40, 99, 115, 201, 44, 37, 54, 167, 187, 104, 189, 236, 171, 111, 189, 107, 44, 57, 188, 0, 129, 129, 34, 69, 59, 13, 52, 203, 58, 91, 189, 236, 171, 111, 189, 161, 157, 181, 188, 151, 52, 103, 109, 173, 46, 249, 53, 203, 58, 91, 189, 236, 171, 111, 189, 161, 157, 181, 188, 0, 129, 129, 34, 95, 59, 25, 51, 46, 77, 69, 189, 236, 171, 111, 189, 40, 213, 3, 189, 150, 63, 107, 103, 91, 48, 210, 53, 46, 77, 69, 189, 236, 171, 111, 189, 40, 213, 3, 189, 0, 129, 129, 34, 109, 59, 10, 50, 133, 202, 39, 189, 236, 171, 111, 189, 138, 202, 39, 189, 150, 73, 111, 97, 105, 49, 177, 53, 133, 202, 39, 189, 236, 171, 111, 189, 138, 202, 39, 189, 0, 129, 129, 34, 109, 59, 244, 48, 35, 213, 3, 189, 236, 171, 111, 189, 51, 77, 69, 189, 150, 84, 115, 91, 117, 50, 153, 53, 35, 213, 3, 189, 236, 171, 111, 189, 51, 77, 69, 189, 0, 129, 129, 34, 95, 59, 201, 47, 149, 157, 181, 188, 236, 171, 111, 189, 210, 58, 91, 189, 151, 96, 120, 83, 117, 51, 137, 53, 149, 157, 181, 188, 236, 171, 111, 189, 210, 58, 91, 189, 0, 129, 129, 34, 69, 59, 201, 45, 82, 44, 57, 188, 236, 171, 111, 189, 172, 187, 104, 189, 153, 109, 126, 74, 47, 52, 131, 53, 82, 44, 57, 188, 236, 171, 111, 189, 172, 187, 104, 189, 0, 129, 129, 34, 30, 59, 248, 43, 108, 183, 111, 51, 232, 139, 30, 62, 117, 193, 23, 51, 0, 126, 126, 99, 231, 52, 0, 60, 108, 183, 111, 51, 232, 139, 30, 62, 117, 193, 23, 51, 0, 126, 127, 60, 173, 56, 127, 53, 108, 183, 111, 51, 232, 139, 30, 62, 117, 193, 23, 51, 0, 126, 130, 106, 230, 58, 127, 53 ),
+"array_index_data": PoolByteArray( 0, 0, 2, 0, 67, 0, 4, 0, 6, 0, 69, 0, 6, 0, 8, 0, 69, 0, 8, 0, 10, 0, 69, 0, 10, 0, 12, 0, 69, 0, 12, 0, 14, 0, 69, 0, 14, 0, 16, 0, 69, 0, 16, 0, 18, 0, 69, 0, 18, 0, 20, 0, 69, 0, 20, 0, 22, 0, 69, 0, 22, 0, 24, 0, 69, 0, 25, 0, 26, 0, 68, 0, 26, 0, 28, 0, 68, 0, 28, 0, 30, 0, 68, 0, 30, 0, 32, 0, 68, 0, 32, 0, 34, 0, 68, 0, 34, 0, 36, 0, 68, 0, 36, 0, 38, 0, 68, 0, 38, 0, 40, 0, 68, 0, 40, 0, 42, 0, 68, 0, 42, 0, 45, 0, 68, 0, 44, 0, 47, 0, 67, 0, 47, 0, 49, 0, 67, 0, 49, 0, 51, 0, 67, 0, 51, 0, 53, 0, 67, 0, 53, 0, 55, 0, 67, 0, 55, 0, 57, 0, 67, 0, 57, 0, 59, 0, 67, 0, 59, 0, 61, 0, 67, 0, 61, 0, 63, 0, 67, 0, 63, 0, 65, 0, 67, 0, 65, 0, 0, 0, 67, 0, 66, 0, 3, 0, 1, 0, 3, 0, 7, 0, 5, 0, 7, 0, 11, 0, 9, 0, 11, 0, 15, 0, 13, 0, 15, 0, 19, 0, 17, 0, 19, 0, 23, 0, 21, 0, 23, 0, 29, 0, 27, 0, 29, 0, 33, 0, 31, 0, 33, 0, 37, 0, 35, 0, 37, 0, 41, 0, 39, 0, 41, 0, 46, 0, 43, 0, 46, 0, 50, 0, 48, 0, 50, 0, 54, 0, 52, 0, 54, 0, 58, 0, 56, 0, 58, 0, 62, 0, 60, 0, 62, 0, 66, 0, 64, 0, 66, 0, 7, 0, 3, 0, 7, 0, 15, 0, 11, 0, 15, 0, 23, 0, 19, 0, 23, 0, 33, 0, 29, 0, 33, 0, 41, 0, 37, 0, 41, 0, 50, 0, 46, 0, 50, 0, 58, 0, 54, 0, 58, 0, 66, 0, 62, 0, 66, 0, 15, 0, 7, 0, 15, 0, 33, 0, 23, 0, 33, 0, 50, 0, 41, 0, 50, 0, 66, 0, 58, 0, 66, 0, 33, 0, 15, 0, 33, 0, 66, 0, 50, 0 ),
+"blend_shape_data": [  ],
+"format": 2194711,
+"index_count": 186,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 70
 }
 
-float noise( vec2 pos )
-{
-	return random( floor( pos ) );
-}
-
-float value_noise( vec2 pos )
-{
-	vec2 p = floor( pos );
-	vec2 f = fract( pos );
-
-	float v00 = noise( p + vec2( 0.0, 0.0 ) );
-	float v10 = noise( p + vec2( 1.0, 0.0 ) );
-	float v01 = noise( p + vec2( 0.0, 1.0 ) );
-	float v11 = noise( p + vec2( 1.0, 1.0 ) );
-
-	vec2 u = f * f * ( 3.0 - 2.0 * f );
-
-	return mix( mix( v00, v10, u.x ), mix( v01, v11, u.x ), u.y );
-}
-
-void fragment( )
-{
-	float depth = max( texture( DEPTH_TEXTURE, SCREEN_UV ).r - min_heathaze_dist, 0.0 );
-	vec2 uv_r = SCREEN_UV + vec2( TIME * speed, 0.0 );
-	vec2 uv_g = SCREEN_UV + vec2( -10.0, -TIME * speed );
-	vec2 shift = vec2(
-		sin(
-				value_noise( uv_r * 8.0 ) * 0.2
-			+	value_noise( uv_r * 16.0 ) * 0.2
-			+	value_noise( uv_r * 32.0 ) * 0.2
-			+	value_noise( uv_r * 64.0 ) * 0.2
-			+	value_noise( uv_r * 128.0 ) * 0.2
-		) - 0.5
-	,	sin(
-			value_noise( uv_g * 8.0 ) * 0.2
-		+	value_noise( uv_g * 16.0 ) * 0.2
-		+	value_noise( uv_g * 32.0 ) * 0.2
-		+	value_noise( uv_g * 64.0 ) * 0.2
-		+	value_noise( uv_g * 128.0 ) * 0.2
-		) - 0.5
-	) * ( depth * max_shift );
-	ALBEDO = texture( SCREEN_TEXTURE, SCREEN_UV + shift ).rgb;
-	float depth_shifted = texture( DEPTH_TEXTURE, SCREEN_UV + shift ).r - min_heathaze_dist;
-
-	ALPHA = float( 0.0 < depth_shifted );
-	DEPTH = 0.0;
-}
-"
-
-[sub_resource type="ShaderMaterial" id=8]
-shader = SubResource( 10 )
-shader_param/max_shift = 2.5
-shader_param/speed = 0.03
-shader_param/min_heathaze_dist = 0.99
-
-[sub_resource type="SphereMesh" id=9]
-material = SubResource( 8 )
-flip_faces = true
-radius = 3.0
-height = 6.0
+[sub_resource type="SpatialMaterial" id=17]
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 0, 1, 0.486275, 0.745098 )
 
 [sub_resource type="Animation" id=12]
 resource_name = "NO POWER"
 loop = true
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("Lights/RedLight:light_energy")
+tracks/0/path = NodePath("Interior/Lights/RedLight:light_energy")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -118,7 +48,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3, 0.5, 0.8, 1 )
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("NoPowerInterface/no power2:visible")
+tracks/1/path = NodePath("Interior/NoPowerInterface/no power2:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -130,7 +60,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("NoPowerInterface/no power:visible")
+tracks/2/path = NodePath("Interior/NoPowerInterface/no power:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -158,7 +88,7 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ShipInterface/MainDisplay:text")
+tracks/1/path = NodePath("Interior/ShipInterface/MainDisplay:text")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -187,7 +117,7 @@ engaging...
 system check...OK", "" ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ShipInterface/X_display:visible")
+tracks/2/path = NodePath("Interior/ShipInterface/X_display:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -199,7 +129,7 @@ tracks/2/keys = {
 "values": [ false, true, false, true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ShipInterface/Y_display:visible")
+tracks/3/path = NodePath("Interior/ShipInterface/Y_display:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -211,7 +141,7 @@ tracks/3/keys = {
 "values": [ false, true, false, true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ShipInterface/Z_display:visible")
+tracks/4/path = NodePath("Interior/ShipInterface/Z_display:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -223,7 +153,7 @@ tracks/4/keys = {
 "values": [ false, true, false, true ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("ShipInterface/Crosshair:text")
+tracks/5/path = NodePath("Interior/ShipInterface/Crosshair:text")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -236,7 +166,7 @@ tracks/5/keys = {
 prisoner #8934", "", "+", "+" ]
 }
 tracks/6/type = "bezier"
-tracks/6/path = NodePath("ShipInterface/Crosshair:scale:x")
+tracks/6/path = NodePath("Interior/ShipInterface/Crosshair:scale:x")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -246,7 +176,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0, 0.5, 3, 4, 5 )
 }
 tracks/7/type = "bezier"
-tracks/7/path = NodePath("ShipInterface/Crosshair:scale:y")
+tracks/7/path = NodePath("Interior/ShipInterface/Crosshair:scale:y")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -256,7 +186,7 @@ tracks/7/keys = {
 "times": PoolRealArray( 0, 0.5, 3, 4, 5 )
 }
 tracks/8/type = "bezier"
-tracks/8/path = NodePath("ShipInterface/Crosshair:scale:z")
+tracks/8/path = NodePath("Interior/ShipInterface/Crosshair:scale:z")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -266,7 +196,7 @@ tracks/8/keys = {
 "times": PoolRealArray( 0, 0.5, 3, 4, 5 )
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Lights/OmniLight:visible")
+tracks/9/path = NodePath("Interior/Lights/OmniLight:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -278,7 +208,7 @@ tracks/9/keys = {
 "values": [ true ]
 }
 tracks/10/type = "bezier"
-tracks/10/path = NodePath("Lights/OmniLight:light_energy")
+tracks/10/path = NodePath("Interior/Lights/OmniLight:light_energy")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -288,7 +218,7 @@ tracks/10/keys = {
 "times": PoolRealArray( 0, 5 )
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("ShipInterface/Crosshair:visible")
+tracks/11/path = NodePath("Interior/ShipInterface/Crosshair:visible")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -300,7 +230,7 @@ tracks/11/keys = {
 "values": [ true ]
 }
 tracks/12/type = "value"
-tracks/12/path = NodePath("ShipInterface/MainDisplay:visible")
+tracks/12/path = NodePath("Interior/ShipInterface/MainDisplay:visible")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/imported = false
@@ -312,7 +242,7 @@ tracks/12/keys = {
 "values": [ true ]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("NoPowerInterface:visible")
+tracks/13/path = NodePath("Interior/NoPowerInterface:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
@@ -324,7 +254,7 @@ tracks/13/keys = {
 "values": [ false ]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("ShipInterface:visible")
+tracks/14/path = NodePath("Interior/ShipInterface:visible")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/imported = false
@@ -336,7 +266,7 @@ tracks/14/keys = {
 "values": [ true ]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("Lights/RedLight:light_energy")
+tracks/15/path = NodePath("Interior/Lights/RedLight:light_energy")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/imported = false
@@ -351,7 +281,7 @@ tracks/15/keys = {
 [sub_resource type="Animation" id=13]
 length = 0.001
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("Lights/RedLight:light_energy")
+tracks/0/path = NodePath("Interior/Lights/RedLight:light_energy")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -361,7 +291,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("NoPowerInterface/no power:visible")
+tracks/1/path = NodePath("Interior/NoPowerInterface/no power:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -373,7 +303,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("NoPowerInterface/no power2:visible")
+tracks/2/path = NodePath("Interior/NoPowerInterface/no power2:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -385,7 +315,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ShipInterface/X_display:visible")
+tracks/3/path = NodePath("Interior/ShipInterface/X_display:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -397,7 +327,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ShipInterface/Y_display:visible")
+tracks/4/path = NodePath("Interior/ShipInterface/Y_display:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -409,7 +339,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("ShipInterface/Z_display:visible")
+tracks/5/path = NodePath("Interior/ShipInterface/Z_display:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -421,7 +351,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("ShipInterface/Crosshair:text")
+tracks/6/path = NodePath("Interior/ShipInterface/Crosshair:text")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -433,7 +363,7 @@ tracks/6/keys = {
 "values": [ "+" ]
 }
 tracks/7/type = "bezier"
-tracks/7/path = NodePath("ShipInterface/Crosshair:scale:x")
+tracks/7/path = NodePath("Interior/ShipInterface/Crosshair:scale:x")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -443,7 +373,7 @@ tracks/7/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/8/type = "bezier"
-tracks/8/path = NodePath("ShipInterface/Crosshair:scale:y")
+tracks/8/path = NodePath("Interior/ShipInterface/Crosshair:scale:y")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -453,7 +383,7 @@ tracks/8/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/9/type = "bezier"
-tracks/9/path = NodePath("ShipInterface/Crosshair:scale:z")
+tracks/9/path = NodePath("Interior/ShipInterface/Crosshair:scale:z")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -463,7 +393,7 @@ tracks/9/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Lights/RedLight:visible")
+tracks/10/path = NodePath("Interior/Lights/RedLight:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -475,7 +405,7 @@ tracks/10/keys = {
 "values": [ true ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("Lights/OmniLight:visible")
+tracks/11/path = NodePath("Interior/Lights/OmniLight:visible")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -487,7 +417,7 @@ tracks/11/keys = {
 "values": [ true ]
 }
 tracks/12/type = "bezier"
-tracks/12/path = NodePath("Lights/OmniLight:light_energy")
+tracks/12/path = NodePath("Interior/Lights/OmniLight:light_energy")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/imported = false
@@ -497,7 +427,7 @@ tracks/12/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("ShipInterface/Crosshair:visible")
+tracks/13/path = NodePath("Interior/ShipInterface/Crosshair:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
@@ -509,7 +439,7 @@ tracks/13/keys = {
 "values": [ false ]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("ShipInterface/MainDisplay:visible")
+tracks/14/path = NodePath("Interior/ShipInterface/MainDisplay:visible")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/imported = false
@@ -521,7 +451,7 @@ tracks/14/keys = {
 "values": [ false ]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("NoPowerInterface:visible")
+tracks/15/path = NodePath("Interior/NoPowerInterface:visible")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/imported = false
@@ -533,7 +463,7 @@ tracks/15/keys = {
 "values": [ true ]
 }
 tracks/16/type = "value"
-tracks/16/path = NodePath("ShipInterface:visible")
+tracks/16/path = NodePath("Interior/ShipInterface:visible")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/imported = false
@@ -550,7 +480,7 @@ resource_name = "ShutDown"
 length = 0.5
 step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("ShipInterface/MainDisplay:visible")
+tracks/0/path = NodePath("Interior/ShipInterface/MainDisplay:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -562,7 +492,7 @@ tracks/0/keys = {
 "values": [ false, true, false, true, false ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ShipInterface/Crosshair:visible")
+tracks/1/path = NodePath("Interior/ShipInterface/Crosshair:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -574,7 +504,7 @@ tracks/1/keys = {
 "values": [ false, true, false, true, false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ShipInterface/X_display:visible")
+tracks/2/path = NodePath("Interior/ShipInterface/X_display:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -586,7 +516,7 @@ tracks/2/keys = {
 "values": [ false, true, false, true, false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ShipInterface/Y_display:visible")
+tracks/3/path = NodePath("Interior/ShipInterface/Y_display:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -598,7 +528,7 @@ tracks/3/keys = {
 "values": [ false, true, false, true, false ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ShipInterface/Z_display:visible")
+tracks/4/path = NodePath("Interior/ShipInterface/Z_display:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -610,7 +540,7 @@ tracks/4/keys = {
 "values": [ false, true, false, true, false ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Lights/OmniLight:visible")
+tracks/5/path = NodePath("Interior/Lights/OmniLight:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -622,7 +552,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Lights/OmniLight:light_energy")
+tracks/6/path = NodePath("Interior/Lights/OmniLight:light_energy")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -634,7 +564,7 @@ tracks/6/keys = {
 "values": [ 0.3, 0.0 ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Lights/RedLight:visible")
+tracks/7/path = NodePath("Interior/Lights/RedLight:visible")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -646,7 +576,7 @@ tracks/7/keys = {
 "values": [ true ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Lights/RedLight:light_energy")
+tracks/8/path = NodePath("Interior/Lights/RedLight:light_energy")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -670,7 +600,7 @@ tracks/9/keys = {
 "values": [ 3, 0 ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("ShipInterface:visible")
+tracks/10/path = NodePath("Interior/ShipInterface:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -682,7 +612,7 @@ tracks/10/keys = {
 "values": [ false ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("NoPowerInterface:visible")
+tracks/11/path = NodePath("Interior/NoPowerInterface:visible")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -694,59 +624,32 @@ tracks/11/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="ArrayMesh" id=16]
-resource_name = "DemoRigV2_Cone"
-surfaces/0 = {
-"aabb": AABB( -0.0579327, -0.0585136, -0.0579328, 0.115866, 0.213344, 0.115866 ),
-"array_data": PoolByteArray( 108, 183, 111, 51, 236, 171, 111, 189, 232, 74, 109, 189, 157, 127, 126, 63, 0, 52, 20, 56, 205, 44, 57, 60, 236, 171, 111, 189, 172, 187, 104, 189, 103, 109, 75, 38, 191, 52, 29, 56, 210, 157, 181, 60, 236, 171, 111, 189, 210, 58, 91, 189, 105, 96, 53, 27, 120, 53, 57, 56, 64, 213, 3, 61, 236, 171, 111, 189, 51, 77, 69, 189, 106, 84, 41, 21, 34, 54, 103, 56, 162, 202, 39, 61, 236, 171, 111, 189, 138, 202, 39, 189, 106, 73, 35, 17, 183, 54, 164, 56, 75, 77, 69, 61, 236, 171, 111, 189, 40, 213, 3, 189, 106, 63, 31, 15, 49, 55, 238, 56, 233, 58, 91, 61, 236, 171, 111, 189, 161, 157, 181, 188, 105, 52, 28, 14, 140, 55, 67, 57, 197, 187, 104, 61, 236, 171, 111, 189, 107, 44, 57, 188, 103, 40, 27, 13, 196, 55, 160, 57, 254, 74, 109, 61, 236, 171, 111, 189, 117, 193, 23, 51, 99, 27, 27, 13, 215, 55, 0, 58, 197, 187, 104, 61, 236, 171, 111, 189, 182, 44, 57, 60, 86, 23, 27, 13, 196, 55, 95, 58, 233, 58, 91, 61, 236, 171, 111, 189, 198, 157, 181, 60, 74, 21, 28, 14, 140, 55, 188, 58, 75, 77, 69, 61, 236, 171, 111, 189, 59, 213, 3, 61, 63, 20, 31, 15, 49, 55, 17, 59, 162, 202, 39, 61, 236, 171, 111, 189, 157, 202, 39, 61, 53, 20, 35, 17, 183, 54, 91, 59, 64, 213, 3, 61, 236, 171, 111, 189, 68, 77, 69, 61, 42, 20, 42, 20, 34, 54, 152, 59, 210, 157, 181, 60, 236, 171, 111, 189, 228, 58, 91, 61, 30, 21, 54, 26, 120, 53, 198, 59, 205, 44, 57, 60, 236, 171, 111, 189, 192, 187, 104, 61, 17, 23, 76, 37, 191, 52, 226, 59, 108, 183, 111, 51, 236, 171, 111, 189, 249, 74, 109, 61, 0, 27, 127, 63, 0, 52, 235, 59, 82, 44, 57, 188, 236, 171, 111, 189, 192, 187, 104, 61, 239, 23, 75, 88, 128, 50, 226, 59, 149, 157, 181, 188, 236, 171, 111, 189, 228, 58, 91, 61, 226, 21, 53, 99, 15, 49, 198, 59, 35, 213, 3, 189, 236, 171, 111, 189, 68, 77, 69, 61, 214, 20, 41, 105, 119, 47, 152, 59, 133, 202, 39, 189, 236, 171, 111, 189, 157, 202, 39, 61, 203, 20, 35, 109, 35, 45, 91, 59, 46, 77, 69, 189, 236, 171, 111, 189, 59, 213, 3, 61, 193, 20, 31, 111, 117, 42, 17, 59, 203, 58, 91, 189, 236, 171, 111, 189, 198, 157, 181, 60, 182, 21, 28, 112, 60, 39, 188, 58, 167, 187, 104, 189, 236, 171, 111, 189, 182, 44, 57, 60, 170, 23, 27, 113, 123, 35, 95, 58, 225, 74, 109, 189, 236, 171, 111, 189, 117, 193, 23, 51, 157, 27, 27, 113, 30, 33, 0, 58, 167, 187, 104, 189, 236, 171, 111, 189, 107, 44, 57, 188, 153, 40, 27, 113, 123, 35, 160, 57, 203, 58, 91, 189, 236, 171, 111, 189, 161, 157, 181, 188, 151, 52, 28, 112, 60, 39, 67, 57, 46, 77, 69, 189, 236, 171, 111, 189, 40, 213, 3, 189, 150, 63, 31, 111, 117, 42, 238, 56, 133, 202, 39, 189, 236, 171, 111, 189, 138, 202, 39, 189, 150, 73, 35, 109, 35, 45, 164, 56, 35, 213, 3, 189, 236, 171, 111, 189, 51, 77, 69, 189, 150, 84, 42, 106, 119, 47, 103, 56, 149, 157, 181, 188, 236, 171, 111, 189, 210, 58, 91, 189, 151, 96, 54, 100, 15, 49, 57, 56, 82, 44, 57, 188, 236, 171, 111, 189, 172, 187, 104, 189, 153, 109, 76, 89, 128, 50, 29, 56, 108, 183, 111, 51, 232, 139, 30, 62, 117, 193, 23, 51, 0, 126, 127, 63, 0, 52, 0, 58 ),
-"array_index_data": PoolByteArray( 0, 0, 1, 0, 32, 0, 1, 0, 2, 0, 32, 0, 2, 0, 3, 0, 32, 0, 3, 0, 4, 0, 32, 0, 4, 0, 5, 0, 32, 0, 5, 0, 6, 0, 32, 0, 6, 0, 7, 0, 32, 0, 7, 0, 8, 0, 32, 0, 8, 0, 9, 0, 32, 0, 9, 0, 10, 0, 32, 0, 10, 0, 11, 0, 32, 0, 11, 0, 12, 0, 32, 0, 12, 0, 13, 0, 32, 0, 13, 0, 14, 0, 32, 0, 14, 0, 15, 0, 32, 0, 15, 0, 16, 0, 32, 0, 16, 0, 17, 0, 32, 0, 17, 0, 18, 0, 32, 0, 18, 0, 19, 0, 32, 0, 19, 0, 20, 0, 32, 0, 20, 0, 21, 0, 32, 0, 21, 0, 22, 0, 32, 0, 22, 0, 23, 0, 32, 0, 23, 0, 24, 0, 32, 0, 24, 0, 25, 0, 32, 0, 25, 0, 26, 0, 32, 0, 26, 0, 27, 0, 32, 0, 27, 0, 28, 0, 32, 0, 28, 0, 29, 0, 32, 0, 29, 0, 30, 0, 32, 0, 30, 0, 31, 0, 32, 0, 31, 0, 0, 0, 32, 0 ),
-"blend_shape_data": [  ],
-"format": 2194711,
-"index_count": 96,
-"primitive": 4,
-"skeleton_aabb": [  ],
-"vertex_count": 33
-}
+[sub_resource type="ShaderMaterial" id=18]
+shader = ExtResource( 3 )
+shader_param/strength = 0.01
 
-[sub_resource type="SpatialMaterial" id=17]
-flags_transparent = true
-flags_unshaded = true
-albedo_color = Color( 0, 1, 0.486275, 0.745098 )
-
-[node name="Rig_V1" type="KinematicBody" groups=["PlayerShip"]]
+[node name="Rig_V2" type="KinematicBody" groups=["PlayerShip"]]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource( 2 )
-CurrentState = 3
 
-[node name="RayCast" type="RayCast" parent="."]
-enabled = true
-cast_to = Vector3( 0, 0, -100 )
+[node name="ShipV2" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.414171, -1.41085 )
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
+[node name="ShipCollision" type="CollisionShape" parent="."]
 transform = Transform( 1.91069e-15, -1, 1.1921e-07, 1, 7.1215e-15, 4.37114e-08, -4.37114e-08, 1.1921e-07, 1, 0, -0.112845, 0.017104 )
 shape = SubResource( 1 )
 
-[node name="DemoRigV2" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.414171, -1.41085 )
+[node name="ShipCast" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, 0, -100 )
 
-[node name="ShipModel" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, -3.90799e-14, 0, 0.837, -1.0717e-07, -1.06581e-14, 9.97788e-08, 0.899, 0, 0, -0.5 )
-visible = false
-mesh = ExtResource( 1 )
-material/0 = SubResource( 2 )
+[node name="Interior" type="Spatial" parent="."]
 
-[node name="Display" type="MeshInstance" parent="."]
-transform = Transform( 0.4, 0, 0, 0, 0.224733, 0.164805, 0, -0.140429, 0.263743, 0, -0.73, -1.2 )
-visible = false
-mesh = SubResource( 3 )
-skeleton = NodePath("../ShipInterface/MainDisplay")
-material/0 = SubResource( 4 )
-
-[node name="ShipInterface" type="Spatial" parent="." groups=["ShipInterface"]]
+[node name="ShipInterface" type="Spatial" parent="Interior" groups=["ShipInterface"]]
 transform = Transform( 1, 0, -3.90799e-14, 0, 0.837, -1.0717e-07, -1.06581e-14, 9.97788e-08, 0.899, 0, 0, -0.5 )
 
-[node name="MainDisplay" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
+[node name="MainDisplay" type="Label3D" parent="Interior/ShipInterface" groups=["ShipInterface"]]
 transform = Transform( 0.5, 1.31561e-08, -4.20797e-14, -8.10751e-09, 0.308125, 0.511774, 1.25373e-08, -0.476478, 0.286875, -0.379728, -0.706362, -1.23239 )
 visible = false
 cast_shadow = 0
@@ -755,14 +658,14 @@ modulate = Color( 0, 1, 0.647059, 1 )
 horizontal_alignment = 0
 vertical_alignment = 0
 
-[node name="Crosshair" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
+[node name="Crosshair" type="Label3D" parent="Interior/ShipInterface" groups=["ShipInterface"]]
 transform = Transform( 1, -2.01948e-28, 5.92923e-21, 2.01948e-28, 1, -2.84217e-14, -5.92923e-21, 2.84217e-14, 1, 1.19209e-07, -2.84432e-07, -2.30482 )
 visible = false
 no_depth_test = true
 modulate = Color( 0, 1, 0.647059, 1 )
 text = "+"
 
-[node name="X_display" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
+[node name="X_display" type="Label3D" parent="Interior/ShipInterface" groups=["ShipInterface"]]
 transform = Transform( 0.5, -8.47032e-22, 1.77636e-14, 8.47034e-22, 0.5, -4.9738e-14, -1.77636e-14, 4.9738e-14, 0.5, -0.0443239, -2.84432e-07, -2.30482 )
 visible = false
 no_depth_test = true
@@ -770,7 +673,7 @@ modulate = Color( 0, 1, 0.647059, 1 )
 text = "10"
 horizontal_alignment = 2
 
-[node name="Y_display" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
+[node name="Y_display" type="Label3D" parent="Interior/ShipInterface" groups=["ShipInterface"]]
 transform = Transform( 0.5, -2.11758e-22, 1.24345e-14, 2.11759e-22, 0.5, -3.90799e-14, -1.24345e-14, 3.90799e-14, 0.5, 0.0306376, -2.84432e-07, -2.30482 )
 visible = false
 no_depth_test = true
@@ -778,17 +681,17 @@ modulate = Color( 0, 1, 0.647059, 1 )
 text = "10"
 horizontal_alignment = 0
 
-[node name="Z_display" type="Label3D" parent="ShipInterface" groups=["ShipInterface"]]
+[node name="Z_display" type="Label3D" parent="Interior/ShipInterface" groups=["ShipInterface"]]
 transform = Transform( 0.5, -4.23515e-22, 1.42109e-14, 4.23516e-22, 0.5, -4.26326e-14, -1.42109e-14, 4.26326e-14, 0.5, -0.0050292, -0.0718218, -2.30482 )
 visible = false
 no_depth_test = true
 modulate = Color( 0, 1, 0.647059, 1 )
 text = "10"
 
-[node name="NoPowerInterface" type="Spatial" parent="."]
+[node name="NoPowerInterface" type="Spatial" parent="Interior"]
 transform = Transform( 0.5, 1.31562e-08, -2.22044e-14, -1.12716e-08, 0.428377, 0.515726, 6.78499e-09, -0.257863, 0.856754, -0.200037, -0.561262, -1.00651 )
 
-[node name="no power2" type="Label3D" parent="NoPowerInterface" groups=["ShipInterface"]]
+[node name="no power2" type="Label3D" parent="Interior/NoPowerInterface" groups=["ShipInterface"]]
 transform = Transform( 1, -2.25432e-08, 2.714e-08, 2.63124e-08, 0.856754, -1.03145, -1.16689e-14, 0.257863, 0.856754, 0.0569527, 2.57058, -1.04764 )
 cast_shadow = 0
 no_depth_test = true
@@ -796,7 +699,7 @@ modulate = Color( 1, 0, 0, 1 )
 text = "NO POWER"
 horizontal_alignment = 0
 
-[node name="no power" type="Label3D" parent="NoPowerInterface" groups=["ShipInterface"]]
+[node name="no power" type="Label3D" parent="Interior/NoPowerInterface" groups=["ShipInterface"]]
 transform = Transform( 1, 2.72835e-09, -2.33355e-08, 2.72837e-09, 0.896309, 0.886862, 5.83385e-09, -0.221715, 0.896309, 0, -0.0247205, -0.362708 )
 cast_shadow = 0
 no_depth_test = true
@@ -804,21 +707,64 @@ modulate = Color( 1, 0, 0, 1 )
 text = "NO POWER"
 horizontal_alignment = 0
 
-[node name="Lights" type="Spatial" parent="."]
+[node name="Lights" type="Spatial" parent="Interior"]
 
-[node name="OmniLight" type="OmniLight" parent="Lights" groups=["ShipInterface"]]
+[node name="OmniLight" type="OmniLight" parent="Interior/Lights" groups=["ShipInterface"]]
 transform = Transform( 1, -4.20406e-27, 1.06581e-14, 2.66069e-28, 1, 3.69483e-13, -1.06581e-14, -3.69483e-13, 1, -0.00278574, 1.23299, -0.0333096 )
 light_energy = 0.0
 shadow_enabled = true
 omni_range = 3.64694
 
-[node name="RedLight" type="OmniLight" parent="Lights"]
+[node name="RedLight" type="OmniLight" parent="Interior/Lights"]
 transform = Transform( 1, 2.63124e-08, -3.90798e-14, -2.25432e-08, 0.856754, 0.515726, 1.357e-08, -0.515726, 0.856754, 0.0444285, 1.2544, 1.33234 )
 light_color = Color( 1, 0, 0, 1 )
 light_energy = 0.0
 
+[node name="Compass" type="Spatial" parent="Interior"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.679054, -0.741426, -1.16033 )
+
+[node name="3DCompass" type="MeshInstance" parent="Interior/Compass"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 17 )
+
+[node name="Posters" type="Spatial" parent="Interior"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12165, 0.230082, 0.317142 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Interior/Posters"]
+transform = Transform( -4.37114e-08, 0, 1, -0.215383, 0.97653, -9.41469e-09, -0.97653, -0.215383, -4.26855e-08, -0.0266482, 0.648244, -0.406157 )
+pixel_size = 0.0009
+transparent = false
+shaded = true
+texture = ExtResource( 6 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="Interior/Posters"]
+transform = Transform( -4.37114e-08, 0, 1, 0.318298, 0.947991, 1.39132e-08, -0.947991, 0.318298, -4.1438e-08, -0.01322, 0.741448, 1.36172 )
+pixel_size = 0.0009
+transparent = false
+shaded = true
+texture = ExtResource( 4 )
+
+[node name="Sprite3D3" type="Sprite3D" parent="Interior/Posters"]
+transform = Transform( -4.37114e-08, 0, 1, -0.00657982, 0.999978, -2.87613e-10, -0.999978, -0.00657982, -4.37104e-08, -0.0186114, 0.741448, 0.535717 )
+pixel_size = 0.0009
+transparent = false
+shaded = true
+texture = ExtResource( 5 )
+
+[node name="Sprite3D4" type="Sprite3D" parent="Interior/Posters"]
+transform = Transform( -4.37114e-08, 0, 1, -0.0435496, 0.999051, -1.90361e-09, -0.999051, -0.0435496, -4.36699e-08, -0.0186114, -0.18764, 0.788564 )
+pixel_size = 0.0007
+transparent = false
+shaded = true
+texture = ExtResource( 7 )
+
+[node name="HeatDisplay" parent="Interior" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 0.529475, 0.848325, 0, -0.848325, 0.529475, -0.381648, -0.731678, -1.36833 )
+
+[node name="POWER ON_BOX" parent="Interior" instance=ExtResource( 10 )]
+
 [node name="Camera" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.190918, 0.526707 )
 
 [node name="head" type="Camera" parent="Camera"]
 current = true
@@ -850,61 +796,6 @@ cast_to = Vector3( 0, 0, -10 )
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="RayCast2" type="RayCast" parent="Camera"]
-enabled = true
-cast_to = Vector3( 0, 0, -100 )
-
-[node name="Blur" type="MeshInstance" parent="."]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.458496, 0, -0.318438 )
-visible = false
-mesh = SubResource( 9 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-"anims/NO POWER" = SubResource( 12 )
-anims/PowerUp = SubResource( 14 )
-anims/RESET = SubResource( 13 )
-anims/ShutDown = SubResource( 15 )
-
-[node name="Compass" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.679054, -0.741426, -1.16033 )
-
-[node name="3D Compass" type="MeshInstance" parent="Compass"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
-mesh = SubResource( 16 )
-skeleton = NodePath("../..")
-material/0 = SubResource( 17 )
-
-[node name="Posters" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12165, 0.230082, 0.317142 )
-
-[node name="Sprite3D" type="Sprite3D" parent="Posters"]
-transform = Transform( -4.37114e-08, 0, 1, -0.215383, 0.97653, -9.41469e-09, -0.97653, -0.215383, -4.26855e-08, -0.0266482, 0.648244, -0.406157 )
-pixel_size = 0.0009
-transparent = false
-shaded = true
-texture = ExtResource( 6 )
-
-[node name="Sprite3D2" type="Sprite3D" parent="Posters"]
-transform = Transform( -4.37114e-08, 0, 1, 0.318298, 0.947991, 1.39132e-08, -0.947991, 0.318298, -4.1438e-08, -0.01322, 0.741448, 1.36172 )
-pixel_size = 0.0009
-transparent = false
-shaded = true
-texture = ExtResource( 4 )
-
-[node name="Sprite3D3" type="Sprite3D" parent="Posters"]
-transform = Transform( -4.37114e-08, 0, 1, -0.00657982, 0.999978, -2.87613e-10, -0.999978, -0.00657982, -4.37104e-08, -0.0186114, 0.741448, 0.535717 )
-pixel_size = 0.0009
-transparent = false
-shaded = true
-texture = ExtResource( 5 )
-
-[node name="Sprite3D4" type="Sprite3D" parent="Posters"]
-transform = Transform( -4.37114e-08, 0, 1, -0.0435496, 0.999051, -1.90361e-09, -0.999051, -0.0435496, -4.36699e-08, -0.0186114, -0.18764, 0.788564 )
-pixel_size = 0.0007
-transparent = false
-shaded = true
-texture = ExtResource( 7 )
-
 [node name="Weapons" type="Spatial" parent="."]
 
 [node name="MiningLasers" parent="Weapons" instance=ExtResource( 8 )]
@@ -912,7 +803,13 @@ texture = ExtResource( 7 )
 [node name="DefaultWeaponTarget" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50 )
 
-[node name="HeatDisplay" parent="." instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 0.529475, 0.848325, 0, -0.848325, 0.529475, -0.381648, -0.731678, -1.36833 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+"anims/NO POWER" = SubResource( 12 )
+anims/PowerUp = SubResource( 14 )
+anims/RESET = SubResource( 13 )
+anims/ShutDown = SubResource( 15 )
 
-[node name="POWER ON_BOX" parent="." instance=ExtResource( 10 )]
+[node name="LenseDistortion" type="ColorRect" parent="."]
+material = SubResource( 18 )
+anchor_right = 1.0
+anchor_bottom = 1.0
