@@ -2,7 +2,7 @@ extends Spatial
 
 var overheat = false
 
-onready var ship = get_parent()
+onready var ship = get_parent().get_parent()
 onready var display = $Label3D
 
 func _process(_delta):
