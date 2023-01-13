@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://mdl/Demo_rig.tres" type="ArrayMesh" id=1]
 [ext_resource path="res://Rig/Rig_V1.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://raw/posters/e6b3325e318aff62672bc81b00b5be50.jpg" type="Texture" id=7]
 [ext_resource path="res://WeaponsAndTools/MiningLasers.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Rig/HeatDisplay.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Rig/POWER ON_BOX.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 1.85182
@@ -842,6 +843,12 @@ text = "+"
 align = 1
 valign = 1
 
+[node name="InteractCast" type="RayCast" parent="Camera/head"]
+enabled = true
+cast_to = Vector3( 0, 0, -10 )
+collide_with_areas = true
+collide_with_bodies = false
+
 [node name="RayCast2" type="RayCast" parent="Camera"]
 enabled = true
 cast_to = Vector3( 0, 0, -100 )
@@ -906,3 +913,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50 )
 
 [node name="HeatDisplay" parent="." instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 0.529475, 0.848325, 0, -0.848325, 0.529475, -0.381648, -0.731678, -1.36833 )
+
+[node name="POWER ON_BOX" parent="." instance=ExtResource( 10 )]

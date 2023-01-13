@@ -7,7 +7,6 @@ onready var display = $Label3D
 
 func _process(_delta):
 	$Label3D/OmniLight.light_energy = ship.heat/100.0
-	print($Label3D/OmniLight.light_energy)
 	if ship.heat == 0:
 		overheat = false
 	if ship.heat < 10:

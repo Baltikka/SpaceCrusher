@@ -7,7 +7,6 @@
 [sub_resource type="CubeMesh" id=8]
 
 [node name="Asteroid" type="RigidBody" groups=["Mineable"]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4459, 0, 6.84519 )
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

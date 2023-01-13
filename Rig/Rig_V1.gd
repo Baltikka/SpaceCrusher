@@ -30,6 +30,7 @@ var yaw_input = 0
 onready var camera  = $Camera
 onready var head = $Camera/head
 onready var raycast = $RayCast
+onready var interactCast = $Camera/head/InteractCast
 onready var compass = $Compass
 onready var compassMat = $"Compass/3D Compass".get_surface_material(0)
 onready var weaponsContainer = $Weapons
@@ -60,9 +61,17 @@ func _process(delta):
 	mission_compass()
 	camera_control(delta)
 	#inputs
+	if Input.is_action_just_pressed("LMB") and camera_lock:
+		var col = interactCast.get_collider()
+		if col:
+			if col.is_in_group("Interactable"):
+					col.interact()
+	
+	
 	if CurrentState == ShipState.ON:
 		if Input.is_action_pressed("LMB"):
-			emit_signal("LMB", true)
+			if !camera_lock:
+				emit_signal("LMB", true)
 		elif Input.is_action_just_released("LMB"):
 			emit_signal("LMB", false)
 	if Input.is_action_just_pressed("Ignition"):
@@ -172,4 +181,15 @@ func animation_control():
 			$AnimationPlayer.play("ShutDown")
 
 func mission_compass():
-	compass.look_at(get_node(compassTarget).transform.origin, transform.basis.y)
+	match CurrentState:
+		ShipState.OFF:
+			pass
+		ShipState.ON:
+			if compassTarget:
+				compass.look_at(get_node(compassTarget).transform.origin, transform.basis.y)
+
+func startup():
+	CurrentState = ShipState.STARTUP
+
+func shutdown():
+	CurrentState = ShipState.SHUTDOWN
